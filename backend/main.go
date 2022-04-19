@@ -47,7 +47,9 @@ func searchByTitle(inputrarray []verror, title string) []verror {
 	var result []verror
 	resultMap := make(map[int]verror)
 	for _, item := range inputrarray {
-		resultMap[customContains(item.Title, title)] = item
+		if customContains(item.Title, title) < len(title) {
+			resultMap[customContains(item.Title, title)] = item
+		}
 	}
 	if len(resultMap) == 0 {
 		return inputrarray
