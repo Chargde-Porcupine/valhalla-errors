@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"path/filepath"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 
@@ -31,13 +32,27 @@ func geneateImagesPaths(db *gorm.DB, router *gin.Engine) {
 		router.StaticFile("/images/"+item.ImageL, "./images/"+item.ImageL)
 	}
 }
+func customContains(larger string, slice string) int {
+	for _, char := range larger {
+		toDel := strings.Index(slice, string(char))
+		if toDel != -1 {
+			slice = slice[:toDel] + slice[toDel+1:]
+		}
+	}
+	fmt.Println(len(slice))
+	return len(slice)
+}
 
 func searchByTitle(inputrarray []verror, title string) []verror {
 	var result []verror
 	for _, item := range inputrarray {
-		if item.Title == title {
+		if customContains(item.Title, title) < len(title) {
+
 			result = append(result, item)
 		}
+	}
+	if len(result) == 0 {
+		return inputrarray
 	}
 	return result
 }
@@ -62,10 +77,11 @@ func main() {
 	//read by title
 	router.GET("/find/:title", func(c *gin.Context) {
 		var verrorfound []verror
-		if err := db.Where("title = ?", c.Param("title")).Find(&verrorfound).Error; err != nil {
+		if err := db.Find(&verrorfound).Error; err != nil {
 			c.JSON(400, "Content Not Found")
 			return
 		}
+		verrorfound = searchByTitle(verrorfound, c.Param("title"))
 		c.IndentedJSON(http.StatusOK, verrorfound)
 	})
 

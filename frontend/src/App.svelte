@@ -7,6 +7,7 @@ import { compute_slots } from "svelte/internal";
   import NewVerror from "./lib/NewVerror.svelte";
   export let verrori;
   let search = true
+  let loading = "loading"
   let searched = ""
   export const sendRequest = async (path) => {
   if (path == "") {
@@ -29,7 +30,9 @@ import { compute_slots } from "svelte/internal";
   function SwitchView(){
     search = !search
     searched = ""
+    loading = "loading"
     reload()
+    loading = ""
   }
   reload() // won't print anything as verrori is still a promise
 </script>
@@ -45,7 +48,7 @@ import { compute_slots } from "svelte/internal";
 <input bind:value="{searched}"> <button on:click="{reload}">search</button>
 <br>
 {#await verrori}
-<p>loading</p>
+<p>{loading}</p>
 {:then verrors}
 {#each verrors as verror}
   <Verror on:message={reload} title = {verror.Title} desc = {verror.Desc} status = {verror.Status} category = {verror.Category} solution = {verror.Solution} imageurl = {verror.ImageL}></Verror>
