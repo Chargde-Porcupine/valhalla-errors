@@ -32,6 +32,16 @@ func geneateImagesPaths(db *gorm.DB, router *gin.Engine) {
 	}
 }
 
+func searchByTitle(inputrarray []verror, title string) []verror {
+	var result []verror
+	for _, item := range inputrarray {
+		if item.Title == title {
+			result = append(result, item)
+		}
+	}
+	return result
+}
+
 func main() {
 	db, err := gorm.Open(sqlite.Open("verrori.db"), &gorm.Config{})
 	if err != nil {
