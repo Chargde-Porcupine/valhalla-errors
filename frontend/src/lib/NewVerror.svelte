@@ -4,16 +4,17 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
 
 
     //post request, multipart (file and data)
-    let title = ""
-    let desc = ""
-    let status = 0
-    let cd1 = 1;
-    let cd2 = 1;
-    let solution = ""
-    let imageurl = ""
+    let title;
+    let desc;
+    let status;
+    let cd1;
+    let cd2;
+    let solution;
+    let imageurl;
     let fileinput;
     let image;
     let error = ""
+    let ext = "uploaded";
     
   export function submitVerror(){
     let data  = JSON.stringify({
@@ -22,11 +23,14 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
         "Status": status,
         "Category": (cd1*10 + cd2),
         "Solution": solution,
-        "ImageL": "uploaded.jpg"
+        "ImageL": ext
 
     })
 
+
     data = data.replaceAll('\\', '');
+
+    console.log(data)
 
     const formData = new FormData();
     formData.append("data", data)
@@ -46,6 +50,12 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
 
   export function onFileSelected(e){
     image = e.target.files[0];
+    ext.concat(e.target.files[0].name.split('.').pop());
+    let reader = new FileReader();
+            reader.readAsDataURL(image);
+            reader.onload = e => {
+                 imageurl = e.target.result
+            };
   }
 
   export function getCat(number){
@@ -87,7 +97,9 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
     <br>
     <p>Photo of Error</p>
     <input type="file" accept=".jpg" bind:this={fileinput} on:change="{(e) => onFileSelected(e)}" >
-
+    <br>
+    <img class="image" src={imageurl} alt="Upload an Image">
+    <br>
     <button on:click="{submitVerror}">Report</button>
     <p>{error}</p>
 </main>
