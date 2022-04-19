@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -39,20 +40,25 @@ func customContains(larger string, slice string) int {
 			slice = slice[:toDel] + slice[toDel+1:]
 		}
 	}
-	fmt.Println(len(slice))
 	return len(slice)
 }
 
 func searchByTitle(inputrarray []verror, title string) []verror {
 	var result []verror
+	resultMap := make(map[int]verror)
 	for _, item := range inputrarray {
-		if customContains(item.Title, title) < len(title) {
-
-			result = append(result, item)
-		}
+		resultMap[customContains(item.Title, title)] = item
 	}
-	if len(result) == 0 {
+	if len(resultMap) == 0 {
 		return inputrarray
+	}
+	keys := make([]int, 0, len(resultMap))
+	for k := range resultMap {
+		keys = append(keys, k)
+	}
+	sort.Ints(keys)
+	for _, i := range keys {
+		result = append(result, resultMap[i])
 	}
 	return result
 }
