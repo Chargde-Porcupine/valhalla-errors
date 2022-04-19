@@ -14,9 +14,13 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
     let fileinput;
     let image;
     let error = ""
-    let ext = "uploaded";
+    let ext = "";
     
   export function submitVerror(){
+    if (title == undefined || desc == undefined || status == undefined || cd1 == undefined || cd2 == undefined || ext == undefined){
+      error = "Fill out the form my dude"
+      return
+    }
     let data  = JSON.stringify({
         "Title": title,
         "Desc": desc,
@@ -50,7 +54,7 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
 
   export function onFileSelected(e){
     image = e.target.files[0];
-    ext.concat(e.target.files[0].name.split('.').pop());
+    ext.concat(e.target.files[0].name);
     let reader = new FileReader();
             reader.readAsDataURL(image);
             reader.onload = e => {
@@ -96,7 +100,7 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
     <input bind:value={solution}>
     <br>
     <p>Photo of Error</p>
-    <input type="file" accept=".jpg" bind:this={fileinput} on:change="{(e) => onFileSelected(e)}" >
+    <input type="file" accept=".jpg, .jpeg, .png" bind:this={fileinput} on:change="{(e) => onFileSelected(e)}" >
     <br>
     <img class="image" src={imageurl} alt="Upload an Image">
     <br>
