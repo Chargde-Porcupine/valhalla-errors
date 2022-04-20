@@ -62,8 +62,9 @@ import { compute_slots } from "svelte/internal";
 <NewVerror></NewVerror>
 
 {/if}
-
+Your mother loves me
 </main>
 
 <style>
+  
 </style>
