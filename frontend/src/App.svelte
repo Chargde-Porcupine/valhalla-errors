@@ -15,7 +15,7 @@ import { compute_slots } from "svelte/internal";
   } else {
     path = "find/".concat(path);
   }
-  const response = await fetch('http://localhost:8080/'.concat(path));
+  const response = await fetch('https://quote-berkeley-desk-edmonton.trycloudflare.com/'.concat(path));
   const data = await response.json();
   if(response.ok){
     return data;

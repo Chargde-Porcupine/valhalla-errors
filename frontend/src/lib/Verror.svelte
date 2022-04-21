@@ -80,7 +80,7 @@ import { statuslist, statustable, uberCat, unterCat } from "./tables";
     <input bind:value={updatedSolution}>
     <br>
     <br>
-    <img src="http://localhost:8080/images/{imageurl}" alt={title}>
+    <img src="https://quote-berkeley-desk-edmonton.trycloudflare.com/images/{imageurl}" alt={title} width="300" height="300">
     <button on:click = {SubmitSolution} >Submit</button>
     </div>
   {/if}
@@ -89,7 +89,11 @@ import { statuslist, statustable, uberCat, unterCat } from "./tables";
 <style>
   div{
       border: 1px solid black ;
-      padding: 0px 50px 50px;
       margin: 10px;
+      padding: 10px;
+  }
+  button{
+    background-color: black;
+    color: yellow;
   }
 </style>

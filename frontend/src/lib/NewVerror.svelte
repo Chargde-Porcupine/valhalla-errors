@@ -43,7 +43,7 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
     method: 'POST',
     body: formData,
     };
-    fetch("http://localhost:8080/create", options).then((res) => {
+    fetch("https://quote-berkeley-desk-edmonton.trycloudflare.com/create", options).then((res) => {
       if(res.ok) {
         error = "Verror reported."
       } else {
@@ -102,7 +102,7 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
     <p>Photo of Error</p>
     <input type="file" accept=".jpg, .jpeg, .png" bind:this={fileinput} on:change="{(e) => onFileSelected(e)}" >
     <br>
-    <img class="image" src={imageurl} alt="Upload an Image">
+    <img class="image" src={imageurl} alt="Upload an Image" width="200" height="200">
     <br>
     <button on:click="{submitVerror}">Report</button>
     <p>{error}</p>
