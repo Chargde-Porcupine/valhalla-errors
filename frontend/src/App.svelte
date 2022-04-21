@@ -62,9 +62,32 @@ import { compute_slots } from "svelte/internal";
 <NewVerror></NewVerror>
 
 {/if}
-Your mother loves me
 </main>
 
 <style>
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+  p {
+    font-size: 1em;
+  }
+  button {
+    font-size: 1em;
+  }
+  input {
+    font-size: 1em;
+  }
+  select {
+    font-size: 1em;
+  }
   
 </style>

@@ -54,7 +54,7 @@ import { statuslist, uberCat, uberlist, unterCat, unterlist } from "./tables";
 
   export function onFileSelected(e){
     image = e.target.files[0];
-    ext.concat(e.target.files[0].name);
+    ext = (e.target.files[0].name);
     let reader = new FileReader();
             reader.readAsDataURL(image);
             reader.onload = e => {
